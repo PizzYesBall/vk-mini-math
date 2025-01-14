@@ -1,12 +1,16 @@
 {
   "name": "mini-app",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "-------------------------------------------------------------------------------": "",
+    "lint": "eslint .",
+    "lint:fix": "eslint --flag unstable_ts_config . --fix",
+    "typecheck": "vue-tsc --noEmit",
+    "--------------------------------------------------------------------------------": "",
     "preview": "vite preview",
     "tunnel": "vk-tunnel --http-protocol=http --host=localhost --port=5173",
     "deploy": "vite build && vk-miniapps-deploy"
@@ -25,8 +29,6 @@
     "@eslint-react/eslint-plugin": "^1.23.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-legacy": "^5.3.1",
     "@vitejs/plugin-react": "^4.2.1",
     "@vkontakte/vk-miniapps-deploy": "^0.1.6",
