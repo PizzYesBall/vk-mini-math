@@ -1,17 +1,17 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import legacy from '@vitejs/plugin-legacy';
+import legacy from '@vitejs/plugin-legacy'
+import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite'
 
 function handleModuleDirectivesPlugin() {
   return {
     name: 'handle-module-directives-plugin',
     transform(code, id) {
       if (id.includes('@vkontakte/icons')) {
-        code = code.replace(/"use-client";?/g, '');
+        code = code.replace(/"use-client";?/g, '')
       }
-      return { code };
+      return { code }
     },
-  };
+  }
 }
 
 /**
@@ -33,7 +33,7 @@ export default defineConfig({
   ],
 
   server: {
-    port: 5173,
+    port: 4321,
     host: 'localhost',
     hmr: {
       protocol: 'ws',
@@ -44,4 +44,4 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
-});
+})

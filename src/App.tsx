@@ -1,27 +1,29 @@
-import { useState, useEffect, ReactNode } from 'react';
-import bridge, { UserInfo } from '@vkontakte/vk-bridge';
-import { View, SplitLayout, SplitCol, ScreenSpinner } from '@vkontakte/vkui';
-import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router';
+import type { UserInfo } from '@vkontakte/vk-bridge'
+import type { ReactNode } from 'react'
+import bridge from '@vkontakte/vk-bridge'
+import { useActiveVkuiLocation } from '@vkontakte/vk-mini-apps-router'
+import { ScreenSpinner, SplitCol, SplitLayout, View } from '@vkontakte/vkui'
+import { useEffect, useState } from 'react'
 
-import { Persik, Home } from './panels';
-import { DEFAULT_VIEW_PANELS } from './routes';
+import { Home, Persik } from './panels'
+import { DEFAULT_VIEW_PANELS } from './routes'
 
-export const App = () => {
-  const { panel: activePanel = DEFAULT_VIEW_PANELS.HOME } = useActiveVkuiLocation();
-  const [fetchedUser, setUser] = useState<UserInfo | undefined>();
-  const [popout, setPopout] = useState<ReactNode | null>(<ScreenSpinner size="large" />);
+export function App() {
+  const { panel: activePanel = DEFAULT_VIEW_PANELS.HOME } = useActiveVkuiLocation()
+  const [fetchedUser, setUser] = useState<UserInfo | undefined>()
+  // const [popout, setPopout] = useState<ReactNode | null>(<ScreenSpinner size="large" />)
 
   useEffect(() => {
     async function fetchData() {
-      const user = await bridge.send('VKWebAppGetUserInfo');
-      setUser(user);
-      setPopout(null);
+      const user = await bridge.send('VKWebAppGetUserInfo')
+      setUser(user)
+      // setPopout(null);
     }
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   return (
-    <SplitLayout popout={popout}>
+    <SplitLayout>
       <SplitCol>
         <View activePanel={activePanel}>
           <Home id="home" fetchedUser={fetchedUser} />
@@ -29,5 +31,5 @@ export const App = () => {
         </View>
       </SplitCol>
     </SplitLayout>
-  );
-};
+  )
+}

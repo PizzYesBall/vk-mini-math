@@ -1,25 +1,32 @@
-import { FC } from 'react';
+import type { UserInfo } from '@vkontakte/vk-bridge'
+import type {
+  NavIdProps,
+} from '@vkontakte/vkui'
+import type { FC } from 'react'
+import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
 import {
-  Panel,
-  PanelHeader,
-  Header,
+  Avatar,
   Button,
-  Group,
   Cell,
   Div,
-  Avatar,
-  NavIdProps,
-} from '@vkontakte/vkui';
-import { UserInfo } from '@vkontakte/vk-bridge';
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router';
+  Group,
+  Header,
+  Panel,
+  PanelHeader,
+} from '@vkontakte/vkui'
+import { generateMathExamples } from '../utils/create-examples'
 
 export interface HomeProps extends NavIdProps {
-  fetchedUser?: UserInfo;
+  fetchedUser?: UserInfo
 }
 
 export const Home: FC<HomeProps> = ({ id, fetchedUser }) => {
-  const { photo_200, city, first_name, last_name } = { ...fetchedUser };
-  const routeNavigator = useRouteNavigator();
+  const { photo_200, city, first_name, last_name } = { ...fetchedUser }
+  // const routeNavigator = useRouteNavigator()
+
+  const examples1 = generateMathExamples(1).map((item, index) => <li key={index}>{item}</li>)
+  const examples2 = generateMathExamples(2).map((item, index) => <li key={index}>{item}</li>)
+  const examples3 = generateMathExamples(3).map((item, index) => <li key={index}>{item}</li>)
 
   return (
     <Panel id={id}>
@@ -34,11 +41,17 @@ export const Home: FC<HomeProps> = ({ id, fetchedUser }) => {
 
       <Group header={<Header mode="secondary">Navigation Example</Header>}>
         <Div>
-          <Button stretched size="l" mode="secondary" onClick={() => routeNavigator.push('persik')}>
-            Покажите Персика, пожалуйста!
-          </Button>
+          <ul>
+            {examples1}
+          </ul>
+          <ul>
+            {examples2}
+          </ul>
+          <ul>
+            {examples3}
+          </ul>
         </Div>
       </Group>
     </Panel>
-  );
-};
+  )
+}
