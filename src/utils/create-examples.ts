@@ -1,4 +1,10 @@
-type Example = string
+interface Example {
+  id: number
+  expression: string
+  answer: number
+}
+
+let exampleId = 1 // ~ глобальный счетчик для уникальных id
 
 function generateExpression(level: number, numVariables: number): Example {
   const operators = level === 1 ? ['+', '-'] : ['+', '-', '*', '/'] // ~ для первого уровня только + и -
@@ -28,14 +34,19 @@ function generateExpression(level: number, numVariables: number): Example {
   const result = calculateResult(numbers, ops)
 
   if (result < 0 || !Number.isInteger(result) || result > 100) {
-    return generateExpression(level, numVariables) // ~ пересоздаем выражение если оно не удовлетворяет условию
+    return generateExpression(level, numVariables) // ~ создаем новое выражение если оно не удовлетворяет условия
   }
 
-  return `${expression} = `
+  // ~ возвращаем объект с id, выражением и ответом
+  return {
+    id: exampleId++,
+    expression: `${expression} = `,
+    answer: result,
+  }
 }
 
 function calculateResult(numbers: number[], ops: string[]): number {
-  // ~ вычисляем умножение и деление
+  // ~ сначала вычисляем умножение и деление
   for (let i = 0; i < ops.length; i++) {
     if (ops[i] === '*' || ops[i] === '/') {
       const a = numbers[i]
@@ -47,20 +58,20 @@ function calculateResult(numbers: number[], ops: string[]): number {
       }
       else if (ops[i] === '/') {
         if (b === 0 || a % b !== 0) {
-          return Number.NaN // Пропустить, если деление на 0 или нецелое
+          return Number.NaN // ~ если деление на 0 или нецелое, то пропускаем
         }
         result = a / b
       }
 
-      // Проверка промежуточного результата
+      // ~ проверка промежуточного результата
       if (result > 100) {
-        return Number.NaN // Перегенерируем выражение, если результат > 100
+        return Number.NaN // ~ перегенерируем выражение, если результат > 100
       }
 
-      // Заменяем два числа и оператор на результат
+      // ~ заменяем два числа и оператор на результат
       numbers.splice(i, 2, result)
       ops.splice(i, 1)
-      i-- // Корректируем индекс после удаления элемента
+      i-- // ~ корректируем индекс после удаления элемента
     }
   }
 

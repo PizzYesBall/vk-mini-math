@@ -3,10 +3,8 @@ import type {
   NavIdProps,
 } from '@vkontakte/vkui'
 import type { FC } from 'react'
-import { useRouteNavigator } from '@vkontakte/vk-mini-apps-router'
 import {
   Avatar,
-  Button,
   Cell,
   Div,
   Group,
@@ -24,9 +22,27 @@ export const Home: FC<HomeProps> = ({ id, fetchedUser }) => {
   const { photo_200, city, first_name, last_name } = { ...fetchedUser }
   // const routeNavigator = useRouteNavigator()
 
-  const examples1 = generateMathExamples(1).map((item, index) => <li key={index}>{item}</li>)
-  const examples2 = generateMathExamples(2).map((item, index) => <li key={index}>{item}</li>)
-  const examples3 = generateMathExamples(3).map((item, index) => <li key={index}>{item}</li>)
+  const examples1 = generateMathExamples(1).map((item, index) => (
+    <li key={index}>
+      {item.expression}
+      {' '}
+      <span>{item.answer}</span>
+    </li>
+  ))
+  const examples2 = generateMathExamples(2).map((item, index) => (
+    <li key={index}>
+      {item.expression}
+      {' '}
+      <span>{item.answer}</span>
+    </li>
+  ))
+  const examples3 = generateMathExamples(3).map((item, index) => (
+    <li key={index}>
+      {item.expression}
+      {' '}
+      <span>{item.answer}</span>
+    </li>
+  ))
 
   return (
     <Panel id={id}>
